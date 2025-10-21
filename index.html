@@ -1,162 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NETFORWARDS - Carbon Accounting and Abatement Strategy</title>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/recharts@2.5.0/dist/Recharts.js"></script>
-    <script src="https://unpkg.com/lucide@0.263.1/dist/umd/lucide.min.js"></script>
+  <meta charset="UTF-8">
+  <title>NetForwards Artifact</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+    iframe {
+      border: none;
+      width: 100%;
+      height: 100vh;
+    }
+  </style>
 </head>
 <body>
-    <div id="root"></div>
-
-    <script type="text/babel">
-        const { useState } = React;
-        const { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart, PieChart, Pie, Cell, ComposedChart } = Recharts;
-        const { TrendingUp, TrendingDown, Activity, BarChart3, DollarSign, Zap, Target, Leaf, Factory, AlertTriangle, CheckCircle, Droplet } = lucide;
-
-        const CarbonAccountingPlatform = () => {
-            const [activeTab, setActiveTab] = useState('overview');
-            const [forecastYears, setForecastYears] = useState(5);
-            const [filterScope, setFilterScope] = useState('All');
-            const [filterGas, setFilterGas] = useState('All');
-            const [selectedFacility, setSelectedFacility] = useState('All');
-
-            // Operator Profile Data
-            const operatorProfile = {
-                name: "Cera Energy Corporation",
-                ticker: "CERA",
-                headquarters: "Houston, Texas",
-                founded: 1920,
-                employees: 11500,
-                operatingRegions: ["Permian Basin", "Gulf of Mexico", "Rocky Mountains", "Middle East", "West Africa"],
-                totalAssets: 48,
-                productionCapacity: 1312000,
-                yearlyProduction: 478880000,
-                reserves: {
-                    proven: 3350,
-                    probable: 1920,
-                    possible: 980
-                },
-                sustainability: {
-                    netZeroTarget: 2050,
-                    interim2030Target: 50,
-                    carbonCaptureCapacity: 2000000,
-                    renewableEnergy: 15
-                }
-            };
-
-            // Asset Portfolio
-            const assetPortfolio = [
-                { name: "Permian Basin - Delaware", type: "Onshore", location: "Texas/New Mexico", production: 425000, emissions: 185000, intensity: 4.35, wells: 4200, status: "Operating" },
-                { name: "Permian Basin - Midland", type: "Onshore", location: "Texas", production: 312000, emissions: 142000, intensity: 4.55, wells: 3100, status: "Operating" },
-                { name: "Rockies - DJ Basin", type: "Onshore", location: "Colorado", production: 89000, emissions: 38000, intensity: 4.27, wells: 890, status: "Operating" },
-                { name: "Gulf of Mexico - Lucius", type: "Offshore", location: "GoM", production: 78000, emissions: 45000, intensity: 5.77, wells: 12, status: "Operating" },
-                { name: "Gulf of Mexico - Heidelberg", type: "Offshore", location: "GoM", production: 62000, emissions: 38000, intensity: 6.13, wells: 8, status: "Operating" },
-                { name: "Al Hosn Gas Project", type: "Onshore", location: "UAE", production: 185000, emissions: 68000, intensity: 3.68, wells: 45, status: "Operating" },
-                { name: "Niger Delta Block 15", type: "Offshore", location: "Nigeria", production: 67000, emissions: 41000, intensity: 6.12, wells: 18, status: "Operating" },
-                { name: "Elk Hills", type: "Onshore", location: "California", production: 52000, emissions: 31000, intensity: 5.96, wells: 1250, status: "Operating" },
-                { name: "Anadarko Basin", type: "Onshore", location: "Oklahoma", production: 42000, emissions: 19000, intensity: 4.52, wells: 520, status: "Operating" }
-            ];
-
-            const portfolioSummary = {
-                totalProduction: assetPortfolio.reduce((sum, a) => sum + a.production, 0),
-                totalEmissions: assetPortfolio.reduce((sum, a) => sum + a.emissions, 0),
-                avgIntensity: (assetPortfolio.reduce((sum, a) => sum + a.emissions, 0) / assetPortfolio.reduce((sum, a) => sum + a.production, 0)).toFixed(2),
-                onshoreAssets: assetPortfolio.filter(a => a.type === "Onshore").length,
-                offshoreAssets: assetPortfolio.filter(a => a.type === "Offshore").length,
-                totalWells: assetPortfolio.reduce((sum, a) => sum + a.wells, 0),
-                onshoreProduction: assetPortfolio.filter(a => a.type === "Onshore").reduce((sum, a) => sum + a.production, 0),
-                offshoreProduction: assetPortfolio.filter(a => a.type === "Offshore").reduce((sum, a) => sum + a.production, 0)
-            };
-
-            // This is a simplified version - you would include all the emission sources, 
-            // historical data, MACC data, and all view components here
-            // Due to length constraints, showing the structure
-
-            return (
-                <div className="min-h-screen bg-gray-50">
-                    <div className="bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 text-white p-6 shadow-xl border-b-4 border-emerald-500">
-                        <div className="max-w-7xl mx-auto">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <div className="flex items-center gap-3">
-                                        <h1 className="text-3xl font-bold">NETFORWARDS</h1>
-                                        <span className="px-3 py-1 bg-amber-500 text-slate-900 text-xs font-bold rounded-full uppercase tracking-wide">
-                                            Beta
-                                        </span>
-                                    </div>
-                                    <p className="text-slate-300 text-lg">Carbon Accounting and Abatement Strategy</p>
-                                    <p className="text-slate-400 text-sm mt-1">Upstream Oil & Gas Emissions Management</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="bg-white border-b">
-                        <div className="max-w-7xl mx-auto px-6">
-                            <nav className="flex space-x-8">
-                                {['overview', 'sources', 'dashboard', 'forecast', 'macc'].map(tab => (
-                                    <button
-                                        key={tab}
-                                        onClick={() => setActiveTab(tab)}
-                                        className={`py-4 px-2 border-b-2 font-medium text-sm transition-colors capitalize ${
-                                            activeTab === tab
-                                                ? 'border-emerald-600 text-emerald-600'
-                                                : 'border-transparent text-gray-600 hover:text-gray-900'
-                                        }`}
-                                    >
-                                        {tab === 'overview' ? 'Operator Overview' :
-                                         tab === 'sources' ? 'Emission Sources' : 
-                                         tab === 'dashboard' ? 'Dashboard & Analytics' :
-                                         tab === 'forecast' ? 'Forecasting' : 'MACC Analysis'}
-                                    </button>
-                                ))}
-                            </nav>
-                        </div>
-                    </div>
-
-                    <div className="max-w-7xl mx-auto p-6">
-                        <div className="text-center py-20">
-                            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                                {activeTab === 'overview' ? 'Operator Overview' :
-                                 activeTab === 'sources' ? 'Emission Sources' : 
-                                 activeTab === 'dashboard' ? 'Dashboard & Analytics' :
-                                 activeTab === 'forecast' ? 'Forecasting' : 'MACC Analysis'}
-                            </h2>
-                            <p className="text-gray-600">Platform content for {activeTab} view</p>
-                        </div>
-                    </div>
-
-                    <div className="bg-white border-t mt-12 p-6 text-center text-sm text-gray-600">
-                        <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg max-w-4xl mx-auto">
-                            <p className="text-xs text-amber-900 font-semibold mb-1">⚠️ BETA VERSION DISCLAIMER</p>
-                            <p className="text-xs text-amber-800">
-                                This platform is currently in beta testing. Features, data, and calculations may be subject to change. 
-                                Please verify critical emissions data and abatement strategies with qualified environmental consultants before making operational decisions.
-                            </p>
-                        </div>
-                        
-                        <p className="mb-3">Data updated: October 2024 | Compliant with GHG Protocol & ISO 14064 standards</p>
-                        
-                        <div className="pt-3 border-t border-gray-300 max-w-4xl mx-auto">
-                            <p className="text-xs text-gray-700 font-semibold mb-2">CONFIDENTIALITY NOTICE</p>
-                            <p className="text-xs text-gray-600">
-                                This document contain(s) or may contain confidential and proprietary information belonging to Kader Taho - NetForwards which may also be privileged. 
-                                The information is intended only for the use of the individual or entity named above. If you are not the intended recipient, you are hereby notified that any disclosure, 
-                                copying, distribution, or the taking of any action in reliance on the contents of this information is strictly prohibited.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            );
-        };
-
-        ReactDOM.render(<CarbonAccountingPlatform />, document.getElementById('root'));
-    </script>
+  <iframe 
+    src="https://claude.site/public/artifacts/cdc5f746-ec7c-4f2f-afa8-d6429fced29b/embed" 
+    title="Claude Artifact" 
+    allow="clipboard-write" 
+    allowfullscreen>
+  </iframe>
 </body>
 </html>
+Fix index.html for GitHub Pages
